@@ -9,7 +9,9 @@ import (
 	"time"
 )
 
+var bot *tb.Bot
 var result []byte
+var msg *tb.Message
 var err_result error
 var er error
 var kirim string
@@ -32,20 +34,36 @@ func eerr(e error) {
 }
 func initBot() {
 
-	bot, _ := tb.NewBot(tb.Settings{
-		// You can also set custom API URL.
-		// If field is empty it equals to "https://api.telegram.org".
-		//URL: "http://195.129.111.17:8012",
+	bot, _ = tb.NewBot(tb.Settings{
 
 		Token:  "1495194079:AAHQmVx0CJZe_ZDRseHHD3ErNISQhl9ahbk",
 		Poller: &tb.LongPoller{Timeout: 10 * time.Second},
 	})
-	streamChat(bot)
+	streamChat()
 	bot.Start()
 
 }
 
-func streamChat(bot *tb.Bot) {
+func execution(tmd []string) {
+	if len(tmd) == 1 {
+		result, er = exec.Command(tmd[0]).Output()
+	} else {
+		result, er = exec.Command(tmd[0], tmd[1]).Output()
+	}
+	eerr(err_result)
+	if er != nil {
+		bot.Send(msg.Sender, "Maybe errorr, check your command")
+		fmt.Println(er)
+	}
+	kirim = string(result)
+	fmt.Println(kirim)
+
+	bot.Send(msg.Sender, kirim)
+	bot.Send(msg.Sender, "Exec Time "+elapseds)
+	fmt.Println("kol" + elapseds)
+}
+
+func streamChat() {
 
 	//stream cmd command /cmd <command>
 	bot.Handle("/cmd", func(m *tb.Message) {
@@ -53,30 +71,11 @@ func streamChat(bot *tb.Bot) {
 		if !m.Private() {
 			return
 		}
+		msg = m
 		tmd := strings.Split(m.Payload, " ")
 		tmds := m.Payload
 		fmt.Println("Cmd From Telegram " + tmds)
-		if len(tmd) == 1 {
-			result, er = exec.Command(tmd[0]).Output()
-		} else {
-			result, er = exec.Command(tmd[0], tmd[1]).Output()
-		}
-		eerr(err_result)
-		if er != nil {
-			bot.Send(m.Sender, "Maybe errorr, check your command")
-			fmt.Println(er)
-		}
-		kirim = string(result)
-		fmt.Println(kirim)
-		//controller.CmdExec(tmd)
-		//a := &tb.Document{File:tb.FromDisk("/tmp/log.txt"),MIME: ".txt"}
-		//fmt.Println(a.OnDisk()) // true
-		//fmt.Println(a.InCloud()) // false
-		//_,e := bot.Send(m.Sender,a)
-		//eerr(e)
-		bot.Send(m.Sender, kirim)
-		bot.Send(m.Sender, "Exec Time "+elapseds)
-		fmt.Println("kol" + elapseds)
+		go execution(tmd)
 	})
 
 	//stream cmd command /cmd <command> save to file
