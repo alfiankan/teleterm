@@ -12,8 +12,11 @@ func eerr(e error) {
 }
 func main() {
 	handler.Begin()
-	//result,_ := exec.Command("git").Output()
+	//result,er := exec.Command("cat","kkk.txt").Output()
 	//fmt.Println(string(result))
+	//fmt.Println(len(string(result)))
+	//fmt.Println(er)
+	//fmt.Println("pol")
 	//d1 := result
 	//err := ioutil.WriteFile("/tmp/log.txt", d1, 0644)
 	//eerr(err)

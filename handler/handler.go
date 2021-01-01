@@ -11,6 +11,19 @@ import (
 
 var result []byte
 var err_result error
+var er error
+var kirim string
+var elapseds string
+
+func timeTrack() func() {
+	start := time.Now()
+	if time.Since(start) > 5 {
+		fmt.Println("to long time")
+	}
+	return func() {
+		fmt.Printf("elapsed", time.Since(start))
+	}
+}
 
 func eerr(e error) {
 	if e != nil {
@@ -36,6 +49,7 @@ func streamChat(bot *tb.Bot) {
 
 	//stream cmd command /cmd <command>
 	bot.Handle("/cmd", func(m *tb.Message) {
+		defer timeTrack()()
 		if !m.Private() {
 			return
 		}
@@ -43,19 +57,26 @@ func streamChat(bot *tb.Bot) {
 		tmds := m.Payload
 		fmt.Println("Cmd From Telegram " + tmds)
 		if len(tmd) == 1 {
-			result, err_result = exec.Command(tmd[0]).Output()
+			result, er = exec.Command(tmd[0]).Output()
 		} else {
-			result, err_result = exec.Command(tmd[0], tmd[1]).Output()
+			result, er = exec.Command(tmd[0], tmd[1]).Output()
 		}
 		eerr(err_result)
-		fmt.Println(string(result))
+		if er != nil {
+			bot.Send(m.Sender, "Maybe errorr, check your command")
+			fmt.Println(er)
+		}
+		kirim = string(result)
+		fmt.Println(kirim)
 		//controller.CmdExec(tmd)
 		//a := &tb.Document{File:tb.FromDisk("/tmp/log.txt"),MIME: ".txt"}
 		//fmt.Println(a.OnDisk()) // true
 		//fmt.Println(a.InCloud()) // false
 		//_,e := bot.Send(m.Sender,a)
 		//eerr(e)
-		bot.Send(m.Sender, string(result))
+		bot.Send(m.Sender, kirim)
+		bot.Send(m.Sender, "Exec Time "+elapseds)
+		fmt.Println("kol" + elapseds)
 	})
 
 	//stream cmd command /cmd <command> save to file
@@ -72,8 +93,13 @@ func streamChat(bot *tb.Bot) {
 		} else {
 			result, err_result = exec.Command(tmd[0], tmd[1]).Output()
 		}
+		if er != nil {
+			bot.Send(m.Sender, "Maybe, errorr check your command")
+			fmt.Println(er)
+		}
+		kirim := result
 		eerr(err_result)
-		d1 := result
+		d1 := kirim
 		err_result = ioutil.WriteFile("/tmp/log.txt", d1, 0644)
 		eerr(err_result)
 		a := &tb.Document{File: tb.FromDisk("/tmp/log.txt"), MIME: ".txt", FileName: "cmd_exec_" + tmds + "_at_" + time.Now().String() + ".txt"}
