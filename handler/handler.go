@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"os/exec"
 	"strings"
+	"teleterm/controller"
 	"time"
 )
 
@@ -42,6 +43,27 @@ func initBot() {
 	streamChat()
 	bot.Start()
 
+}
+
+func executionwf(tmd []string) {
+	if len(tmd) == 1 {
+		result, err_result = exec.Command(tmd[0]).Output()
+	} else {
+		result, err_result = exec.Command(tmd[0], tmd[1]).Output()
+	}
+	if er != nil {
+		bot.Send(msg.Sender, "Maybe, errorr check your command")
+		fmt.Println(er)
+	}
+	kirim := result
+	eerr(err_result)
+	d1 := kirim
+	err_result = ioutil.WriteFile("./log/log.txt", d1, 0644)
+	eerr(err_result)
+	a := &tb.Document{File: tb.FromDisk("./log/log.txt"), MIME: ".txt", FileName: "cmd_exec_at_" + time.Now().String() + ".txt"}
+	fmt.Println(a.OnDisk())  // true
+	fmt.Println(a.InCloud()) // false
+	bot.Send(msg.Sender, a)
 }
 
 func execution(tmd []string) {
@@ -83,28 +105,22 @@ func streamChat() {
 		if !m.Private() {
 			return
 		}
+		msg = m
 		tmd := strings.Split(m.Payload, " ")
 		tmds := m.Payload
 
 		fmt.Println("Cmd From Telegram " + tmds)
-		if len(tmd) == 1 {
-			result, err_result = exec.Command(tmd[0]).Output()
-		} else {
-			result, err_result = exec.Command(tmd[0], tmd[1]).Output()
+		go executionwf(tmd)
+	})
+
+	bot.Handle(tb.OnDocument, func(m *tb.Message) {
+		if !m.Private() {
+			return
 		}
-		if er != nil {
-			bot.Send(m.Sender, "Maybe, errorr check your command")
-			fmt.Println(er)
-		}
-		kirim := result
-		eerr(err_result)
-		d1 := kirim
-		err_result = ioutil.WriteFile("/tmp/log.txt", d1, 0644)
-		eerr(err_result)
-		a := &tb.Document{File: tb.FromDisk("/tmp/log.txt"), MIME: ".txt", FileName: "cmd_exec_" + tmds + "_at_" + time.Now().String() + ".txt"}
-		fmt.Println(a.OnDisk())  // true
-		fmt.Println(a.InCloud()) // false
-		bot.Send(m.Sender, a)
+		fmt.Println(m.Document.FileID)
+		controller.DownloadFile("./"+m.Document.FileName, "https://api.telegram.org/bot1495194079:AAHQmVx0CJZe_ZDRseHHD3ErNISQhl9ahbk/getFile?file_id="+m.Document.FileID)
+		bot.Send(m.Sender, "File Uploaded")
+
 	})
 
 }

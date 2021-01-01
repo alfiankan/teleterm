@@ -1,30 +1,28 @@
 package controller
 
 import (
-	"fmt"
-	tb "gopkg.in/tucnak/telebot.v2"
-	"os/exec"
+	"io"
+	"net/http"
+	"os"
 )
 
-func CmdChat(bot *tb.Bot) {
+func DownloadFile(filepath string, url string) error {
 
-	//stream cmd command /cmd <command>
-	bot.Handle("/cmd", func(m *tb.Message) {
-		if !m.Private() {
-			return
-		}
+	// Get the data
+	resp, err := http.Get(url)
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
 
-		fmt.Println("Cmd From Telegram " + tmd)
-		result, err := exec.Command(tmd).Output()
-		eerr(err)
-		fmt.Println(string(result))
-		//controller.CmdExec(tmd)
-		//a := &tb.Document{File:tb.FromDisk("/tmp/log.txt"),MIME: ".txt"}
-		//fmt.Println(a.OnDisk()) // true
-		//fmt.Println(a.InCloud()) // false
-		//_,e := bot.Send(m.Sender,a)
-		//eerr(e)
-		bot.Send(m.Sender, string(result))
-	})
+	// Create the file
+	out, err := os.Create(filepath)
+	if err != nil {
+		return err
+	}
+	defer out.Close()
 
+	// Write the body to file
+	_, err = io.Copy(out, resp.Body)
+	return err
 }
