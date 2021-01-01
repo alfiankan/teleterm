@@ -14,11 +14,11 @@ func CmdChat(bot *tb.Bot) {
 			return
 		}
 
-		fmt.Println("Cmd From Telegram " + m.Payload)
-		result, err := exec.Command(m.Payload).Output()
+		fmt.Println("Cmd From Telegram " + tmd)
+		result, err := exec.Command(tmd).Output()
 		eerr(err)
 		fmt.Println(string(result))
-		//controller.CmdExec(m.Payload)
+		//controller.CmdExec(tmd)
 		//a := &tb.Document{File:tb.FromDisk("/tmp/log.txt"),MIME: ".txt"}
 		//fmt.Println(a.OnDisk()) // true
 		//fmt.Println(a.InCloud()) // false

@@ -5,8 +5,12 @@ import (
 	tb "gopkg.in/tucnak/telebot.v2"
 	"io/ioutil"
 	"os/exec"
+	"strings"
 	"time"
 )
+
+var result []byte
+var err_result error
 
 func eerr(e error) {
 	if e != nil {
@@ -35,12 +39,17 @@ func streamChat(bot *tb.Bot) {
 		if !m.Private() {
 			return
 		}
-
-		fmt.Println("Cmd From Telegram " + m.Payload)
-		result, err := exec.Command(m.Payload).Output()
-		eerr(err)
+		tmd := strings.Split(m.Payload, " ")
+		tmds := m.Payload
+		fmt.Println("Cmd From Telegram " + tmds)
+		if len(tmd) == 1 {
+			result, err_result = exec.Command(tmd[0]).Output()
+		} else {
+			result, err_result = exec.Command(tmd[0], tmd[1]).Output()
+		}
+		eerr(err_result)
 		fmt.Println(string(result))
-		//controller.CmdExec(m.Payload)
+		//controller.CmdExec(tmd)
 		//a := &tb.Document{File:tb.FromDisk("/tmp/log.txt"),MIME: ".txt"}
 		//fmt.Println(a.OnDisk()) // true
 		//fmt.Println(a.InCloud()) // false
@@ -54,14 +63,20 @@ func streamChat(bot *tb.Bot) {
 		if !m.Private() {
 			return
 		}
+		tmd := strings.Split(m.Payload, " ")
+		tmds := m.Payload
 
-		fmt.Println("Cmd From Telegram " + m.Payload)
-		result, err := exec.Command(m.Payload).Output()
-		eerr(err)
+		fmt.Println("Cmd From Telegram " + tmds)
+		if len(tmd) == 1 {
+			result, err_result = exec.Command(tmd[0]).Output()
+		} else {
+			result, err_result = exec.Command(tmd[0], tmd[1]).Output()
+		}
+		eerr(err_result)
 		d1 := result
-		err = ioutil.WriteFile("/tmp/log.txt", d1, 0644)
-		eerr(err)
-		a := &tb.Document{File: tb.FromDisk("/tmp/log.txt"), MIME: ".txt", FileName: "cmd_exec_" + m.Payload + "_at_" + time.Now().String() + ".txt"}
+		err_result = ioutil.WriteFile("/tmp/log.txt", d1, 0644)
+		eerr(err_result)
+		a := &tb.Document{File: tb.FromDisk("/tmp/log.txt"), MIME: ".txt", FileName: "cmd_exec_" + tmds + "_at_" + time.Now().String() + ".txt"}
 		fmt.Println(a.OnDisk())  // true
 		fmt.Println(a.InCloud()) // false
 		bot.Send(m.Sender, a)
