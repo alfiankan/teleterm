@@ -18,6 +18,21 @@ var er error
 var kirim string
 var elapseds string
 
+var Lock_id int
+var is_locked bool = false
+
+func Lock(stat bool, senderId int) {
+	if stat {
+		is_locked = true
+		Lock_id = senderId
+	} else {
+		if senderId == Lock_id {
+			is_locked = false
+			Lock_id = 0
+		}
+	}
+}
+
 func timeTrack() func() {
 	start := time.Now()
 	if time.Since(start) > 5 {
@@ -61,8 +76,7 @@ func executionwf(tmd []string) {
 	err_result = ioutil.WriteFile("./log/log.txt", d1, 0644)
 	eerr(err_result)
 	a := &tb.Document{File: tb.FromDisk("./log/log.txt"), MIME: ".txt", FileName: "cmd_exec_at_" + time.Now().String() + ".txt"}
-	fmt.Println(a.OnDisk())  // true
-	fmt.Println(a.InCloud()) // false
+
 	bot.Send(msg.Sender, a)
 }
 
@@ -81,23 +95,27 @@ func execution(tmd []string) {
 	fmt.Println(kirim)
 
 	bot.Send(msg.Sender, kirim)
-	bot.Send(msg.Sender, "Exec Time "+elapseds)
-	fmt.Println("kol" + elapseds)
+	fmt.Println("Elapsed time" + elapseds)
 }
 
 func streamChat() {
 
 	//stream cmd command /cmd <command>
 	bot.Handle("/cmd", func(m *tb.Message) {
+		fmt.Println("FROM : ", m.Sender.FirstName)
 		defer timeTrack()()
 		if !m.Private() {
 			return
 		}
 		msg = m
-		tmd := strings.Split(m.Payload, " ")
-		tmds := m.Payload
-		fmt.Println("Cmd From Telegram " + tmds)
-		go execution(tmd)
+		if is_locked {
+			tmd := strings.Split(m.Payload, " ")
+			tmds := m.Payload
+			fmt.Println("Cmd From Telegram " + tmds)
+			go execution(tmd)
+		} else {
+			bot.Send(msg.Sender, "Not Allowed")
+		}
 	})
 
 	//stream cmd command /cmd <command> save to file
@@ -106,20 +124,62 @@ func streamChat() {
 			return
 		}
 		msg = m
-		tmd := strings.Split(m.Payload, " ")
-		tmds := m.Payload
+		if is_locked {
+			tmd := strings.Split(m.Payload, " ")
+			tmds := m.Payload
 
-		fmt.Println("Cmd From Telegram " + tmds)
-		go executionwf(tmd)
+			fmt.Println("Cmd From Telegram " + tmds)
+			go executionwf(tmd)
+		} else {
+			bot.Send(msg.Sender, "Not Allowed")
+		}
 	})
 
+	//receive document
 	bot.Handle(tb.OnDocument, func(m *tb.Message) {
 		if !m.Private() {
 			return
 		}
-		fmt.Println(m.Document.FileID)
-		controller.DownloadFile("./"+m.Document.FileName, "https://api.telegram.org/bot1495194079:AAHQmVx0CJZe_ZDRseHHD3ErNISQhl9ahbk/getFile?file_id="+m.Document.FileID)
-		bot.Send(m.Sender, "File Uploaded")
+		if is_locked {
+			fmt.Println("FILE ID : ", m.Document.FileID)
+			controller.DownloadFile("./"+m.Document.FileName, "https://api.telegram.org/bot1495194079:AAHQmVx0CJZe_ZDRseHHD3ErNISQhl9ahbk/getFile?file_id="+m.Document.FileID)
+			bot.Send(m.Sender, "File Uploaded")
+		} else {
+			bot.Send(msg.Sender, "Not Allowed")
+		}
+
+	})
+
+	//stream cmd command /get <file path> get file
+	bot.Handle("/get", func(m *tb.Message) {
+		if !m.Private() {
+			return
+		}
+		msg = m
+		if is_locked {
+			a := &tb.Document{File: tb.FromDisk(msg.Payload)}
+			bot.Send(msg.Sender, a)
+		} else {
+			bot.Send(msg.Sender, "Not Allowed")
+		}
+	})
+
+	//stream cmd command /lock <true / false> lock only from spesific sender id
+	bot.Handle("/lock", func(m *tb.Message) {
+		if !m.Private() {
+			return
+		}
+		msg = m
+		if msg.Payload == "true" {
+			//lock
+			Lock(true, msg.Sender.ID)
+			bot.Send(msg.Sender, "Locked")
+			bot.Send(msg.Sender, "Username : "+msg.Sender.FirstName+"\n User ID : "+string(msg.Sender.ID))
+		} else {
+			//unlock
+			Lock(false, msg.Sender.ID)
+			bot.Send(msg.Sender, "Unlocked")
+		}
 
 	})
 
