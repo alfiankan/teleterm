@@ -7,7 +7,7 @@ Telegram Bot Exec Terminal Command
 <img src="demoo.gif"/>
 <br>
 
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/AJOPngS-BsE/0.jpg)](https://www.youtube.com/watch?v=AJOPngS-BsE)
+Video Demo & Tutorial : https://www.youtube.com/watch?v=AJOPngS-BsE
 
 <br>
 # Use Case
