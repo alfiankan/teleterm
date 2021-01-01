@@ -4,6 +4,7 @@ import (
 	"fmt"
 	tb "gopkg.in/tucnak/telebot.v2"
 	"io/ioutil"
+	"os"
 	"os/exec"
 	"strings"
 	"teleterm/controller"
@@ -52,7 +53,7 @@ func initBot() {
 
 	bot, _ = tb.NewBot(tb.Settings{
 
-		Token:  "1495194079:AAHQmVx0CJZe_ZDRseHHD3ErNISQhl9ahbk",
+		Token:  os.Getenv("TOKEN_TELEGRAM_BOT"),
 		Poller: &tb.LongPoller{Timeout: 10 * time.Second},
 	})
 	streamChat()

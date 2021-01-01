@@ -1,10 +1,13 @@
 package main
 
 import (
+	"github.com/joho/godotenv"
 	"teleterm/handler"
 )
 
-func main() {
+var teleToken string
 
+func main() {
+	godotenv.Load(".env")
 	handler.Begin()
 }
