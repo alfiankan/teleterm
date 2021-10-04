@@ -1,7 +1,6 @@
 # teleterm
 Telegram Bot Exec Terminal Command 
-[![codecov](https://codecov.io/gh/codecov/example-go/branch/master/graph/badge.svg)](https://app.codecov.io/gh/alfiankan/teleterm)
-
+[![codecov](https://codecov.io/gh/alfiankan/teleterm/branch/main/graph/badge.svg?token=ZQ4Z1ZU4EM)](https://codecov.io/gh/alfiankan/teleterm)
 >you can exec command from your telegram
 
 # Demo
