@@ -20,17 +20,20 @@ Video Demo & Tutorial : https://www.youtube.com/watch?v=AJOPngS-BsE
 - Mac OS 15
 
 
-# How To Install
-.Build From Source
- >- clone this repository
- >- Make sure golang is installed
- >- make .env file (you can look at example.env)
- >- Make telegram bot account to get token read this https://core.telegram.org/bots
- >- put your telegram bot token to env after TOKEN_TELEGRAM_BOT=
- >- build the source `go build -o teleterm main.go`
- >- run `./teleterm`
- >- open telegram bot account and type `/lock true`
- >- Start send message command from telegram
+# How To use
+    - go get ``
+    - see following example code
+
+```go
+package main
+
+import "github.com/alfiankan/teleterm"
+
+func TestStartBot(t *testing.T) {
+	StartBot("1913854019:AAFnzlF3DnM3NGZjlYPm0bBMnyigFYdH7nM")
+}
+
+```
 
 # Available Bot Command
 | Command       |Desc          |

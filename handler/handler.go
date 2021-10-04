@@ -2,13 +2,14 @@ package handler
 
 import (
 	"fmt"
-	tb "gopkg.in/tucnak/telebot.v2"
 	"io/ioutil"
-	"os"
+	"log"
 	"os/exec"
 	"strings"
-	"teleterm/controller"
 	"time"
+
+	"github.com/alfiankan/teleterm/controller"
+	tb "gopkg.in/tucnak/telebot.v2"
 )
 
 var bot *tb.Bot
@@ -49,15 +50,19 @@ func eerr(e error) {
 		fmt.Println(e)
 	}
 }
-func initBot() {
+func initBot(token string) {
 
-	bot, _ = tb.NewBot(tb.Settings{
+	bot, err := tb.NewBot(tb.Settings{
 
-		Token:  os.Getenv("TOKEN_TELEGRAM_BOT"),
+		Token:  token,
 		Poller: &tb.LongPoller{Timeout: 10 * time.Second},
 	})
-	streamChat()
-	bot.Start()
+	if err != nil {
+		log.Println(err)
+	} else {
+		streamChat()
+		bot.Start()
+	}
 
 }
 
@@ -186,11 +191,11 @@ func streamChat() {
 
 }
 
-func Begin() {
+func Begin(token string) {
 	fmt.Println("Bot Is Starting...")
 	fmt.Println("\n████████╗███████╗██╗░░░░░███████╗████████╗███████╗██████╗░███╗░░░███╗\n╚══██╔══╝██╔════╝██║░░░░░██╔════╝╚══██╔══╝██╔════╝██╔══██╗████╗░████║\n░░░██║░░░█████╗░░██║░░░░░█████╗░░░░░██║░░░█████╗░░██████╔╝██╔████╔██║\n░░░██║░░░██╔══╝░░██║░░░░░██╔══╝░░░░░██║░░░██╔══╝░░██╔══██╗██║╚██╔╝██║\n░░░██║░░░███████╗███████╗███████╗░░░██║░░░███████╗██║░░██║██║░╚═╝░██║\n░░░╚═╝░░░╚══════╝╚══════╝╚══════╝░░░╚═╝░░░╚══════╝╚═╝░░╚═╝╚═╝░░░░░╚═╝")
 	fmt.Println("Github Repo : https://github.com/alfiankan/teleterm")
 	fmt.Println("License : Apache License 2.0")
 	fmt.Println("Listening......")
-	initBot()
+	initBot(token)
 }
