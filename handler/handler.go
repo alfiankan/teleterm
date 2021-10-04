@@ -17,7 +17,7 @@ var result []byte
 var msg *tb.Message
 var errResult error
 var er error
-var kirim string
+var send string
 var elapseds string
 
 var lockId int
@@ -76,9 +76,9 @@ func executionwf(tmd []string) {
 		bot.Send(msg.Sender, "Maybe, errorr check your command")
 		fmt.Println(er)
 	}
-	kirim := result
+	send := result
 	eerr(errResult)
-	d1 := kirim
+	d1 := send
 	errResult = ioutil.WriteFile("./log/log.txt", d1, 0644)
 	eerr(errResult)
 	a := &tb.Document{File: tb.FromDisk("./log/log.txt"), MIME: ".txt", FileName: "cmd_exec_at_" + time.Now().String() + ".txt"}
@@ -97,10 +97,10 @@ func execution(tmd []string) {
 		bot.Send(msg.Sender, "Maybe errorr, check your command")
 		fmt.Println(er)
 	}
-	kirim = string(result)
-	fmt.Println(kirim)
+	send = string(result)
+	fmt.Println(send)
 
-	bot.Send(msg.Sender, kirim)
+	bot.Send(msg.Sender, send)
 	fmt.Println("Elapsed time" + elapseds)
 }
 
