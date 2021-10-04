@@ -15,22 +15,22 @@ import (
 var bot *tb.Bot
 var result []byte
 var msg *tb.Message
-var err_result error
+var errResult error
 var er error
 var kirim string
 var elapseds string
 
-var Lock_id int
-var is_locked bool = false
+var lockId int
+var isLocked bool = false
 
-func Lock(stat bool, senderId int) {
+func lock(stat bool, senderId int) {
 	if stat {
-		is_locked = true
-		Lock_id = senderId
+		isLocked = true
+		lockId = senderId
 	} else {
-		if senderId == Lock_id {
-			is_locked = false
-			Lock_id = 0
+		if senderId == lockId {
+			isLocked = false
+			lockId = 0
 		}
 	}
 }
@@ -68,19 +68,19 @@ func initBot(token string) {
 
 func executionwf(tmd []string) {
 	if len(tmd) == 1 {
-		result, err_result = exec.Command(tmd[0]).Output()
+		result, errResult = exec.Command(tmd[0]).Output()
 	} else {
-		result, err_result = exec.Command(tmd[0], tmd[1]).Output()
+		result, errResult = exec.Command(tmd[0], tmd[1]).Output()
 	}
 	if er != nil {
 		bot.Send(msg.Sender, "Maybe, errorr check your command")
 		fmt.Println(er)
 	}
 	kirim := result
-	eerr(err_result)
+	eerr(errResult)
 	d1 := kirim
-	err_result = ioutil.WriteFile("./log/log.txt", d1, 0644)
-	eerr(err_result)
+	errResult = ioutil.WriteFile("./log/log.txt", d1, 0644)
+	eerr(errResult)
 	a := &tb.Document{File: tb.FromDisk("./log/log.txt"), MIME: ".txt", FileName: "cmd_exec_at_" + time.Now().String() + ".txt"}
 
 	bot.Send(msg.Sender, a)
@@ -92,7 +92,7 @@ func execution(tmd []string) {
 	} else {
 		result, er = exec.Command(tmd[0], tmd[1]).Output()
 	}
-	eerr(err_result)
+	eerr(errResult)
 	if er != nil {
 		bot.Send(msg.Sender, "Maybe errorr, check your command")
 		fmt.Println(er)
@@ -114,7 +114,7 @@ func streamChat() {
 			return
 		}
 		msg = m
-		if is_locked {
+		if isLocked {
 			tmd := strings.Split(m.Payload, " ")
 			tmds := m.Payload
 			fmt.Println("Cmd From Telegram " + tmds)
@@ -130,7 +130,7 @@ func streamChat() {
 			return
 		}
 		msg = m
-		if is_locked {
+		if isLocked {
 			tmd := strings.Split(m.Payload, " ")
 			tmds := m.Payload
 
@@ -146,7 +146,7 @@ func streamChat() {
 		if !m.Private() {
 			return
 		}
-		if is_locked {
+		if isLocked {
 			fmt.Println("FILE ID : ", m.Document.FileID)
 			controller.DownloadFile("./"+m.Document.FileName, "https://api.telegram.org/bot1495194079:AAHQmVx0CJZe_ZDRseHHD3ErNISQhl9ahbk/getFile?file_id="+m.Document.FileID)
 			bot.Send(m.Sender, "File Uploaded")
@@ -162,7 +162,7 @@ func streamChat() {
 			return
 		}
 		msg = m
-		if is_locked {
+		if isLocked {
 			a := &tb.Document{File: tb.FromDisk(msg.Payload)}
 			bot.Send(msg.Sender, a)
 		} else {
@@ -178,12 +178,12 @@ func streamChat() {
 		msg = m
 		if msg.Payload == "true" {
 			//lock
-			Lock(true, msg.Sender.ID)
+			lock(true, msg.Sender.ID)
 			bot.Send(msg.Sender, "Locked")
 			bot.Send(msg.Sender, "Username : "+msg.Sender.FirstName+"\n User ID : "+string(msg.Sender.ID))
 		} else {
 			//unlock
-			Lock(false, msg.Sender.ID)
+			lock(false, msg.Sender.ID)
 			bot.Send(msg.Sender, "Unlocked")
 		}
 
@@ -191,6 +191,7 @@ func streamChat() {
 
 }
 
+// start boot
 func Begin(token string) {
 	fmt.Println("Bot Is Starting...")
 	fmt.Println("\n████████╗███████╗██╗░░░░░███████╗████████╗███████╗██████╗░███╗░░░███╗\n╚══██╔══╝██╔════╝██║░░░░░██╔════╝╚══██╔══╝██╔════╝██╔══██╗████╗░████║\n░░░██║░░░█████╗░░██║░░░░░█████╗░░░░░██║░░░█████╗░░██████╔╝██╔████╔██║\n░░░██║░░░██╔══╝░░██║░░░░░██╔══╝░░░░░██║░░░██╔══╝░░██╔══██╗██║╚██╔╝██║\n░░░██║░░░███████╗███████╗███████╗░░░██║░░░███████╗██║░░██║██║░╚═╝░██║\n░░░╚═╝░░░╚══════╝╚══════╝╚══════╝░░░╚═╝░░░╚══════╝╚═╝░░╚═╝╚═╝░░░░░╚═╝")

@@ -21,16 +21,16 @@ Video Demo & Tutorial : https://www.youtube.com/watch?v=AJOPngS-BsE
 
 
 # How To use
-    - go get ``
+    - install `go get github.com/alfiankan/teleterm/teleterm`
     - see following example code
 
 ```go
 package main
 
-import "github.com/alfiankan/teleterm"
+import "github.com/alfiankan/teleterm/teleterm"
 
-func TestStartBot(t *testing.T) {
-	StartBot("1913854019:AAFnzlF3DnM3NGZjlYPm0bBMnyigFYdH7nM")
+func main()  {
+	teleterm.StartBot("your telegram bot token")
 }
 
 ```

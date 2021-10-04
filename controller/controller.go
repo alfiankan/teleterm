@@ -6,6 +6,7 @@ import (
 	"os"
 )
 
+// download file
 func DownloadFile(filepath string, url string) error {
 
 	// Get the data
