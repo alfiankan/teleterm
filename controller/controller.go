@@ -7,7 +7,7 @@ import (
 )
 
 // download filell
-func DownloadFile(filepath string, url string) error {
+func DownloadFile(filepath, url string) error {
 
 	// Get the data
 	resp, err := http.Get(url)
