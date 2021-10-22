@@ -6,7 +6,7 @@ import (
 	"os"
 )
 
-// download filell
+// DownloadFile -> downloading file then send to telegram
 func DownloadFile(filepath, url string) error {
 
 	// Get the data
