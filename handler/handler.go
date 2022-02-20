@@ -8,7 +8,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/alfiankan/teleterm/controller"
+	"github.com/fguinez/teleterm/controller"
 	tb "gopkg.in/tucnak/telebot.v2"
 )
 

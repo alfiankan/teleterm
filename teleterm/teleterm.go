@@ -1,6 +1,6 @@
 package teleterm
 
-import "github.com/alfiankan/teleterm/handler"
+import "github.com/fguinez/teleterm/handler"
 
 // StartBot ->Start Teleterm Service
 func StartBot(token string) {
