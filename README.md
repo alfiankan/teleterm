@@ -16,8 +16,8 @@ Video Demo & Tutorial : https://www.youtube.com/watch?v=AJOPngS-BsE
 - Etc
 
 # Tested On
-- ubuntu 20.04
-- Mac OS 15
+- [x] ubuntu 20.04
+- [x] Mac OS 15
 
 
 # How To use
