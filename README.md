@@ -1,6 +1,16 @@
 # teleterm
 Telegram Bot Exec Terminal Command 
 
+# !imoportant ⚠️
+- we found some issue from gituhub issue and youtube comment
+- we just starting refactoring to make teleterm as cli app version
+- planning :
+	- wrap as cli applicaton
+	- release distribution cross platform
+	- elease distribution for arm and raspbery pi
+	- enhance interaction bot using button
+	- create button and bot command from cli or bot
+
 [![codecov](https://codecov.io/gh/alfiankan/teleterm/branch/main/graph/badge.svg?token=ZQ4Z1ZU4EM)](https://codecov.io/gh/alfiankan/teleterm)
 [![Mentioned in Awesome Go](https://awesome.re/mentioned-badge.svg)](https://github.com/avelino/awesome-go)  
 
