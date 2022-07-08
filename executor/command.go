@@ -11,7 +11,12 @@ type CommandOutputWriter struct{}
 
 func (c *CommandOutputWriter) ExecFullOutput(command string) (outOk []byte, outErr []byte, err error) {
 
-	cmd := exec.Command(viper.GetString("shell_executor"), "-c", command)
+	executor := viper.GetString("shell_executor")
+	if executor == "" {
+		executor = "/bin/bash"
+	}
+
+	cmd := exec.Command(executor, "-c", command)
 
 	out, err := cmd.CombinedOutput()
 	if err != nil {
