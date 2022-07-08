@@ -1,2 +1,3 @@
 teleterm:
   telegram_token: "xxxxxxxxx"
+  shell_executor: "/bin/bash"

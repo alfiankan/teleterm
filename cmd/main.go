@@ -19,10 +19,12 @@ func main() {
 			// reconfigure
 			fmt.Println("Fresh Configuring, Please Wait ...")
 			homePath := fmt.Sprintf("%s/.teleterm", os.Getenv("HOME"))
-			os.Mkdir(homePath, os.ModePerm)
+			err := os.RemoveAll(homePath)
+			err = os.Mkdir(homePath, os.ModePerm)
 
 			execCmd := new(executor.CommandOutputWriter)
-			_, outErr, err := execCmd.ExecFullOutput(fmt.Sprintf("cp -r /Users/alfiankan/Development/teleterm/empty/* %s", homePath))
+			_, outErr, err := execCmd.ExecFullOutput(fmt.Sprintf("wget https://github.com/alfiankan/teleterm/raw/main/empty/teleterm.db -P %s", homePath))
+			_, outErr, err = execCmd.ExecFullOutput(fmt.Sprintf("wget https://github.com/alfiankan/teleterm/raw/main/empty/config.yaml -P %s", homePath))
 			if err != nil {
 				fmt.Println(outErr)
 				panic(err)
