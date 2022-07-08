@@ -3,13 +3,15 @@ package executor
 import (
 	"fmt"
 	"os/exec"
+
+	"github.com/spf13/viper"
 )
 
 type CommandOutputWriter struct{}
 
 func (c *CommandOutputWriter) ExecFullOutput(command string) (outOk []byte, outErr []byte, err error) {
 
-	cmd := exec.Command("bash", "-c", command)
+	cmd := exec.Command(viper.GetString("shell_executor"), "-c", command)
 
 	out, err := cmd.CombinedOutput()
 	if err != nil {
