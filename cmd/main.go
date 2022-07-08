@@ -2,19 +2,42 @@ package main
 
 import (
 	"context"
-	"log"
+	"fmt"
 	"os"
 
+	"github.com/alfiankan/teleterm/common"
+	"github.com/alfiankan/teleterm/executor"
 	"github.com/alfiankan/teleterm/teleterm"
+	"github.com/spf13/viper"
 )
 
 func main() {
-	path, err := os.Getwd()
-	if err != nil {
-		log.Fatal(err)
+	var path string
+	startArgs := os.Args
+	if len(startArgs) > 1 {
+		if startArgs[1] == "fresh" {
+			// reconfigure
+			fmt.Println("Fresh Configuring, Please Wait ...")
+			homePath := fmt.Sprintf("%s/.teleterm", os.Getenv("HOME"))
+			os.Mkdir(homePath, os.ModePerm)
+
+			execCmd := new(executor.CommandOutputWriter)
+			_, outErr, err := execCmd.ExecFullOutput(fmt.Sprintf("cp -r /Users/alfiankan/Development/teleterm/empty/* %s", homePath))
+			if err != nil {
+				fmt.Println(outErr)
+				panic(err)
+			}
+			fmt.Println("Done ...")
+			os.Exit(0)
+		}
+		path = startArgs[1]
+	} else {
+		path = fmt.Sprintf("%s/.teleterm", os.Getenv("HOME"))
 	}
-	log.Println(path)
+
+	common.InitConfig(path)
+
 	ctx := context.Background()
-	db := teleterm.NewSqliteConnection(path + "/teleterm.db")
-	teleterm.Start(ctx, db, "5438204586:AAFxj59Op6BX9IcHqFiS0su7zziH9QIsQNk")
+	db := common.NewSqliteConnection(fmt.Sprintf("%s/teleterm.db", path))
+	teleterm.Start(ctx, db, viper.GetString("teleterm.telegram_token"))
 }
