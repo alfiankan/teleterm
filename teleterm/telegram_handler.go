@@ -171,6 +171,17 @@ func Start(ctx context.Context, db *sql.DB, telebotToken string) {
 
 	})
 
+	b.Handle("/getfile", func(c tele.Context) error {
+
+		fileName := c.Message().Payload
+		log.Info().Str("state", "download file").Msg(fileName)
+
+		file := tele.FromDisk(fileName)
+
+		return c.Reply(&tele.Document{File: file})
+
+	})
+
 	b.Start()
 
 }
