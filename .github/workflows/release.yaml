@@ -6,16 +6,8 @@ on:
     types: 
         - created
   
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-    - name: Test
-      run: make test
-      
+jobs: 
   releases-matrix:
-    needs: test
     name: Release Matrix
     runs-on: ubuntu-latest
     strategy:
