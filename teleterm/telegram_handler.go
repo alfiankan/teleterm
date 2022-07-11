@@ -199,7 +199,7 @@ func Start(ctx context.Context, db *sql.DB, telebotToken string) {
 			fmt.Sprintf("%s/%s", savePath, c.Message().Document.FileName),
 			fmt.Sprintf("https://api.telegram.org/bot%s/getFile?file_id=%s", viper.GetString("teleterm.telegram_token"), c.Message().Document.FileID),
 		)
-		return c.Reply(c.Message().Document.FileID)
+		return c.Reply("File Uploaded")
 	})
 
 	b.Start()
