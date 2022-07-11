@@ -27,7 +27,7 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         goos: ${{ matrix.goos }}
         goarch: ${{ matrix.goarch }}
-        pre_command: export CGO_ENABLED=1
+        pre_command: apt-get install gcc && export CGO_ENABLED=1
         goversion: "https://dl.google.com/go/go1.18.linux-amd64.tar.gz"
         project_path: "./cmd"
         binary_name: "teleterm"
