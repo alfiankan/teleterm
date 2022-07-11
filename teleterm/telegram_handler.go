@@ -9,6 +9,8 @@ import (
 
 	"github.com/alfiankan/teleterm/common"
 	"github.com/alfiankan/teleterm/executor"
+	"github.com/spf13/viper"
+	"gopkg.in/telebot.v3"
 	tele "gopkg.in/telebot.v3"
 )
 
@@ -169,6 +171,35 @@ func Start(ctx context.Context, db *sql.DB, telebotToken string) {
 
 		return c.Reply(fmt.Sprintf(formatOk, button.Cmd, outOk))
 
+	})
+
+	// send document
+	b.Handle("/getfile", func(c tele.Context) error {
+
+		fileName := c.Message().Payload
+		log.Info().Str("state", "download file").Msg(fileName)
+
+		file := tele.FromDisk(fileName)
+
+		return c.Reply(&tele.Document{File: file})
+
+	})
+
+	//receive document
+	b.Handle(telebot.OnDocument, func(c tele.Context) error {
+
+		log.Info().Str("state", "upload file").Msg(c.Message().Document.FileID)
+
+		savePath := "./"
+		if c.Message().Caption != "" {
+			savePath = c.Message().Caption
+		}
+
+		common.DownloadFile(
+			fmt.Sprintf("%s/%s", savePath, c.Message().Document.FileName),
+			fmt.Sprintf("https://api.telegram.org/bot%s/getFile?file_id=%s", viper.GetString("teleterm.telegram_token"), c.Message().Document.FileID),
+		)
+		return c.Reply("File Uploaded")
 	})
 
 	b.Start()
