@@ -27,7 +27,6 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         goos: ${{ matrix.goos }}
         goarch: ${{ matrix.goarch }}
-        pre_command: apt install build-essential && export CGO_ENABLED=1 && export CC=aarch64-linux-gnu-gcc
         goversion: "https://dl.google.com/go/go1.18.linux-amd64.tar.gz"
         project_path: "./cmd"
         binary_name: "teleterm"
