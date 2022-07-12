@@ -45,7 +45,7 @@ Required :
 	teleterm fresh
 	```
 	
-	!![Teleterm Fresh Configure](docs/teleterm-running.png)
+	![Teleterm Fresh Configure](docs/teleterm-running.png)
 
 	teleterm will create folder on your home folder with name `.telegram` contains :
 	- config.yaml
@@ -67,7 +67,7 @@ Required :
 
 	To run teleterm simply run `teleterm` and log info will displayed.
 
-	!![Teleterm Running](docs/teleterm-running.png)
+	![Teleterm Running](docs/teleterm-running-on.png)
 
 
 
@@ -115,8 +115,6 @@ then new button will appeared :
 ## Shortcut Button
 To run command using shortcut simply click the button telegram bot will find the exec command from database.
 
-!![Click Buttons](docs/teleterm-buttons-click.png)
-
 ## Delete Button Shortcut
 To delete shortcut button simply send message using following format:
 ```bash
@@ -130,18 +128,12 @@ output replied by telegram bot :
 
 !![Delete Button](docs/teleterm-deletebutton.png)
 
-then updated button will appeared :
-
-!![Updated button](docs/teleterm-buttons-updated.png)
+then updated button will appeared.
 
 ## Uploading File
 To upload file simply send document on telegram:
 
 !![Upload File](docs/teleterm-upload.png)
-
-To specify location add path to mention file like :
-
-!![Upload Path](docs/teleterm-upload-path.png)
 
 By default will upload on cwd path if you not add target path on file mention.
 
