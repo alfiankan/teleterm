@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/alfiankan/teleterm/common"
-	"github.com/alfiankan/teleterm/executor"
-	"github.com/alfiankan/teleterm/teleterm"
+	"github.com/alfiankan/teleterm/v2/common"
+	"github.com/alfiankan/teleterm/v2/executor"
+	"github.com/alfiankan/teleterm/v2/teleterm"
 	"github.com/spf13/viper"
 )
 

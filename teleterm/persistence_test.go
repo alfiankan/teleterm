@@ -7,7 +7,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/alfiankan/teleterm/common"
+	"github.com/alfiankan/teleterm/v2/common"
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/assert"
 )

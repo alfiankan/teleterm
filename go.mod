@@ -1,4 +1,4 @@
-module github.com/alfiankan/teleterm
+module github.com/alfiankan/teleterm/v2
 
 go 1.18
 

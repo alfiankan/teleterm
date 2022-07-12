@@ -7,8 +7,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/alfiankan/teleterm/common"
-	"github.com/alfiankan/teleterm/executor"
+	"github.com/alfiankan/teleterm/v2/common"
+	"github.com/alfiankan/teleterm/v2/executor"
 	"github.com/spf13/viper"
 	"gopkg.in/telebot.v3"
 	tele "gopkg.in/telebot.v3"

@@ -9,7 +9,7 @@ import (
 
 func TestExecStandartCommandFullOutput(t *testing.T) {
 	cmd := new(CommandOutputWriter)
-	outputOk, outputErr, err := cmd.ExecFullOutput("go")
+	outputOk, outputErr, err := cmd.ExecFullOutput("ls")
 	fmt.Println("Success :")
 	fmt.Print(string(outputOk))
 	fmt.Println("Error :")
@@ -19,7 +19,7 @@ func TestExecStandartCommandFullOutput(t *testing.T) {
 
 func TestExecStandartCommandTailOutput(t *testing.T) {
 	cmd := new(CommandOutputWriter)
-	outputOk, outputErr, err := cmd.ExecTailOutput("ls /bin")
+	outputOk, outputErr, err := cmd.ExecTailOutput("ls")
 	fmt.Println("Success :")
 	fmt.Print(string(outputOk))
 	fmt.Println("Error :")
@@ -29,7 +29,7 @@ func TestExecStandartCommandTailOutput(t *testing.T) {
 
 func TestExecStandartCommandHeadOutput(t *testing.T) {
 	cmd := new(CommandOutputWriter)
-	outputOk, outputErr, err := cmd.ExecHeadOutput("ls /bin")
+	outputOk, outputErr, err := cmd.ExecHeadOutput("ls")
 	fmt.Println("Success :")
 	fmt.Print(string(outputOk))
 	fmt.Println("Error :")
