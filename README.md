@@ -77,17 +77,17 @@ Required :
 
 
 ## Available Bot Command
-| Command       |Desc          |
-| ------------- |:-------------|
-|/refresh |Refresh the bot system
-| /run `<command>`| executing command
-| /getfile `<filepath>`| transfer donwload file from bot server
-|/addbutton `<button_name>!!<command>`| add button shortcut
-|/deletebutton `<button_name>`|delete button shortcut
+| Command       |Desc          |Example          |
+| ------------- |:-------------|:-------------|
+|/refresh |Refresh the bot system | /refresh |
+| /run `<command>`| executing command | /run ping -c 5 8.8.8.8 |
+| /getfile `<filepath>`| transfer donwload file from bot server | /getfile /home/raspi/myfile.txt |
+|/addbutton `<button_name>!!<command>`| add button shortcut | /addbutton ping!!ping -c 5 8.8.8.8 |
+|/deletebutton `<button_name>`|delete button shortcut | /deletebutton ping |
 
 
 ## Run Command
-To run command from telegram simply send message using following format :
+To execute commands from telegram just send a message using the following format :
 ```bash
 /run <command>
 ```
@@ -100,7 +100,7 @@ output replied by telegram bot :
 ![Run command](docs/teleterm-run-cmd.png)
 
 ## Add Button Shortcut
-To run command from telegram button you need to add buttons simply send message using following format:
+To execute commands from the telegram button, you need to add a button, just send a message using the following format :
 ```bash
 /addbutton <button_name>!!<command>
 ```
@@ -112,15 +112,15 @@ output replied by telegram bot :
 
 ![Add Button](docs/teleterm-addbutton.png)
 
-then new button will appeared :
+a new button will appear :
 
 ![Show Buttons](docs/teleterm-buttons.png)
 
 ## Shortcut Button
-To run command using shortcut simply click the button telegram bot will find the exec command from database.
+To run a command using a shortcut just click the telegram button the bot will find the exec command from the database.
 
 ## Delete Button Shortcut
-To delete shortcut button simply send message using following format:
+To remove a shortcut simply send a message using the following format:
 ```bash
 /deletebutton <button_name>
 ```
@@ -132,26 +132,26 @@ output replied by telegram bot :
 
 ![Delete Button](docs/teleterm-deletebutton.png)
 
-then updated button will appeared.
+then updated buttons will appear.
 
 ## Uploading File
-To upload file simply send document on telegram:
+To upload a file just send the document on telegram :
 
 ![Upload File](docs/teleterm-upload.png)
 
-By default will upload on cwd path if you not add target path on file mention.
+By default it will upload in cwd path if you don't add target path on file mention.
 
 output replied by telegram bot :
 
 ![Upload Success](docs/teleterm-upload-success.png)
 
 ## Download file
-To donwload file simply send message using following format:
+To download the file simply send a message using the following format :
 ```bash
 /getfile <filepath>
 ```
 
-Filepath is filepath on where teleterm running on
+Filepath is the filepath where teleterm runs
 
 for example :
 ```bash
