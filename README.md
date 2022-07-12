@@ -93,7 +93,7 @@ for example :
 ```
 output replied by telegram bot :
 
-!![Run command](docs/teleterm-run-cmd.png)
+![Run command](docs/teleterm-run-cmd.png)
 
 ## Add Button Shortcut
 To run command from telegram button you need to add buttons simply send message using following format:
@@ -106,11 +106,11 @@ for example :
 ```
 output replied by telegram bot :
 
-!![Add Button](docs/teleterm-addbutton.png)
+![Add Button](docs/teleterm-addbutton.png)
 
 then new button will appeared :
 
-!![Show Buttons](docs/teleterm-buttons.png)
+![Show Buttons](docs/teleterm-buttons.png)
 
 ## Shortcut Button
 To run command using shortcut simply click the button telegram bot will find the exec command from database.
@@ -126,20 +126,20 @@ for example :
 ```
 output replied by telegram bot :
 
-!![Delete Button](docs/teleterm-deletebutton.png)
+![Delete Button](docs/teleterm-deletebutton.png)
 
 then updated button will appeared.
 
 ## Uploading File
 To upload file simply send document on telegram:
 
-!![Upload File](docs/teleterm-upload.png)
+![Upload File](docs/teleterm-upload.png)
 
 By default will upload on cwd path if you not add target path on file mention.
 
 output replied by telegram bot :
 
-!![Upload Success](docs/teleterm-upload-success.png)
+![Upload Success](docs/teleterm-upload-success.png)
 
 ## Download file
 To donwload file simply send message using following format:
@@ -155,4 +155,4 @@ for example :
 ```
 output replied by telegram bot :
 
-!![Downloaded File](docs/teleterm-downloadfile.png)
+![Downloaded File](docs/teleterm-downloadfile.png)
