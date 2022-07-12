@@ -8,6 +8,7 @@ import (
 	"testing"
 
 	"github.com/alfiankan/teleterm/common"
+	"github.com/google/uuid"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -19,7 +20,7 @@ func TestCreateButton(t *testing.T) {
 		db: db,
 	}
 	ctx := context.Background()
-	err := persist.AddButton(ctx, "Button 1", "ls -l")
+	err := persist.AddButton(ctx, uuid.NewString(), "ls -l")
 	assert.Nil(t, err)
 }
 
