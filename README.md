@@ -3,7 +3,8 @@ Telegram Bot Exec Terminal Command
 
 [![codecov](https://codecov.io/gh/alfiankan/teleterm/branch/main/graph/badge.svg?token=ZQ4Z1ZU4EM)](https://codecov.io/gh/alfiankan/teleterm)
 [![Mentioned in Awesome Go](https://awesome.re/mentioned-badge.svg)](https://github.com/avelino/awesome-go)  
-
+[![Go Reference](https://pkg.go.dev/badge/github.com/alfiankan/teleterm.svg)](https://pkg.go.dev/github.com/alfiankan/teleterm)
+[![Go report card](https://goreportcard.com/badge/github.com/alfiankan/teleterm)](https://goreportcard.com/badge/github.com/alfiankan/teleterm)
 
 ![teleterm2-demo](https://user-images.githubusercontent.com/40946917/178386328-3795dc02-b30a-437a-a46b-20db141601d5.gif)
 
