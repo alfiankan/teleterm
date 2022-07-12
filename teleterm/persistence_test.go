@@ -7,13 +7,14 @@ import (
 	"os"
 	"testing"
 
+	"github.com/alfiankan/teleterm/common"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestCreateButton(t *testing.T) {
 	path, _ := os.Getwd()
 	log.Println(path)
-	db := NewSqliteConnection(path + "/teleterm.db")
+	db := common.NewSqliteConnection(path + "/teleterm.db")
 	persist := Persistence{
 		db: db,
 	}
@@ -25,7 +26,7 @@ func TestCreateButton(t *testing.T) {
 func TestGetAllButton(t *testing.T) {
 	path, _ := os.Getwd()
 	log.Println(path)
-	db := NewSqliteConnection(path + "/teleterm.db")
+	db := common.NewSqliteConnection(path + "/teleterm.db")
 	persist := Persistence{
 		db: db,
 	}
@@ -40,7 +41,7 @@ func TestGetAllButton(t *testing.T) {
 func TestGetButtonByName(t *testing.T) {
 	path, _ := os.Getwd()
 	log.Println(path)
-	db := NewSqliteConnection(path + "/teleterm.db")
+	db := common.NewSqliteConnection(path + "/teleterm.db")
 	persist := Persistence{
 		db: db,
 	}
