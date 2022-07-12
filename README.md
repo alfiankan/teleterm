@@ -5,6 +5,10 @@ Telegram Bot Exec Terminal Command
 [![Mentioned in Awesome Go](https://awesome.re/mentioned-badge.svg)](https://github.com/avelino/awesome-go)  
 
 
+![teleterm2-demo](https://user-images.githubusercontent.com/40946917/178386328-3795dc02-b30a-437a-a46b-20db141601d5.gif)
+
+
+
 ## Use Case
 - Running command on IoT Device through telegram bot
 - Transfering Files through telegram bot
