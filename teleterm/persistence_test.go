@@ -47,7 +47,19 @@ func TestGetButtonByName(t *testing.T) {
 		db: db,
 	}
 	ctx := context.Background()
-	button, err := persist.GetButtonByname(ctx, "Button 1")
+	button, _ := persist.GetButtonByname(ctx, "Button 1")
 	fmt.Println(button)
+	assert.NotNil(t, persist.db)
+}
+
+func TestDeleteButtonByName(t *testing.T) {
+	path, _ := os.Getwd()
+	log.Println(path)
+	db := common.NewSqliteConnection(path + "/teleterm.db")
+	persist := Persistence{
+		db: db,
+	}
+	ctx := context.Background()
+	err := persist.DeleteButtonsByName(ctx, "Button 1")
 	assert.Nil(t, err)
 }
