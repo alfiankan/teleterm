@@ -52,7 +52,7 @@ Required :
 	
 	![Teleterm Fresh Configure](docs/teleterm-running.png)
 
-	teleterm will create folder on your home folder with name `.telegram` contains :
+	teleterm will create folder on your home folder with name `.teleterm` contains :
 	- config.yaml
 		config yaml hold teleterm config :
 
