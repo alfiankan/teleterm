@@ -1,3 +1,6 @@
 teleterm:
-  telegram_token: "xxxxxxxxx"
+  telegram_token: "xxxxxx"
   shell_executor: "/bin/bash"
+whitelist:
+  - <USER_ID>
+  - <USER_ID>

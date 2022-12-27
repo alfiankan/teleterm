@@ -10,8 +10,8 @@ import (
 	"github.com/alfiankan/teleterm/v2/common"
 	"github.com/alfiankan/teleterm/v2/executor"
 	"github.com/spf13/viper"
-	"gopkg.in/telebot.v3"
 	tele "gopkg.in/telebot.v3"
+	"gopkg.in/telebot.v3/middleware"
 )
 
 const (
@@ -65,6 +65,13 @@ func Start(ctx context.Context, db *sql.DB, telebotToken string) {
 		log.Error().Str("state", "init bot").Msg(err.Error())
 		return
 	}
+
+	configWhitelist := viper.GetIntSlice("whitelist")
+	newWhiteList := []int64{}
+	for _, id := range configWhitelist {
+		newWhiteList = append(newWhiteList, int64(id))
+	}
+	b.Use(middleware.Whitelist(newWhiteList...))
 
 	menu := &tele.ReplyMarkup{ResizeKeyboard: true}
 
@@ -186,7 +193,7 @@ func Start(ctx context.Context, db *sql.DB, telebotToken string) {
 	})
 
 	//receive document
-	b.Handle(telebot.OnDocument, func(c tele.Context) error {
+	b.Handle(tele.OnDocument, func(c tele.Context) error {
 
 		log.Info().Str("state", "upload file").Msg(c.Message().Document.FileID)
 
