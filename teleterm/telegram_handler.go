@@ -32,7 +32,7 @@ Err :
 
 func createButtonReplay(ctx context.Context, persist Persistence, menu *tele.ReplyMarkup) (teleMenus []tele.Row, ere error) {
 
-	menus := []tele.Row{}
+	var menus []tele.Row
 
 	buttons, err := persist.GetAllButtons(ctx)
 	if err != nil {
@@ -67,11 +67,11 @@ func Start(ctx context.Context, db *sql.DB, telebotToken string) {
 	}
 
 	configWhitelist := viper.GetIntSlice("whitelist")
-	newWhiteList := []int64{}
+	var whitelist []int64
 	for _, id := range configWhitelist {
-		newWhiteList = append(newWhiteList, int64(id))
+		whitelist = append(whitelist, int64(id))
 	}
-	b.Use(middleware.Whitelist(newWhiteList...))
+	b.Use(middleware.Whitelist(whitelist...))
 
 	menu := &tele.ReplyMarkup{ResizeKeyboard: true}
 
@@ -192,7 +192,7 @@ func Start(ctx context.Context, db *sql.DB, telebotToken string) {
 
 	})
 
-	//receive document
+	// receive document
 	b.Handle(tele.OnDocument, func(c tele.Context) error {
 
 		log.Info().Str("state", "upload file").Msg(c.Message().Document.FileID)
