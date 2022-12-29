@@ -10,8 +10,8 @@ import (
 	"github.com/alfiankan/teleterm/v2/common"
 	"github.com/alfiankan/teleterm/v2/executor"
 	"github.com/spf13/viper"
-	"gopkg.in/telebot.v3"
 	tele "gopkg.in/telebot.v3"
+	"gopkg.in/telebot.v3/middleware"
 )
 
 const (
@@ -32,7 +32,7 @@ Err :
 
 func createButtonReplay(ctx context.Context, persist Persistence, menu *tele.ReplyMarkup) (teleMenus []tele.Row, ere error) {
 
-	menus := []tele.Row{}
+	var menus []tele.Row
 
 	buttons, err := persist.GetAllButtons(ctx)
 	if err != nil {
@@ -65,6 +65,13 @@ func Start(ctx context.Context, db *sql.DB, telebotToken string) {
 		log.Error().Str("state", "init bot").Msg(err.Error())
 		return
 	}
+
+	configWhitelist := viper.GetIntSlice("whitelist")
+	var whitelist []int64
+	for _, id := range configWhitelist {
+		whitelist = append(whitelist, int64(id))
+	}
+	b.Use(middleware.Whitelist(whitelist...))
 
 	menu := &tele.ReplyMarkup{ResizeKeyboard: true}
 
@@ -185,8 +192,8 @@ func Start(ctx context.Context, db *sql.DB, telebotToken string) {
 
 	})
 
-	//receive document
-	b.Handle(telebot.OnDocument, func(c tele.Context) error {
+	// receive document
+	b.Handle(tele.OnDocument, func(c tele.Context) error {
 
 		log.Info().Str("state", "upload file").Msg(c.Message().Document.FileID)
 
