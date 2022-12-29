@@ -17,14 +17,10 @@ Telegram Bot Exec Terminal Command
 ## How To Install
 
 1. Prebuilt Binary
-	you can download prebuild binary, available prebuilts :
+	you can download prebuild binary depends on your os and arch, available prebuilts here:
 
-	|os | arch |available |
-	| ------------- | ------------- |:-------------:|
-	| linux | amd64 | [Download v2.0.0](https://github.com/alfiankan/teleterm/releases/download/v2.0.0/teleterm-linux-amd54.zip) |
-	| linux | arm64 | [Download v2.0.0](https://github.com/alfiankan/teleterm/releases/download/v2.0.0/teleterm-linux-arm64.zip) |
-	| macos | amd64 | [Download v2.0.0](https://github.com/alfiankan/teleterm/releases/download/v2.0.0/teleterm-mac-amd64.zip) |
-
+	https://github.com/alfiankan/teleterm/releases/tag/v2.1.0
+	
 	Once the binary is downloaded, you can move the binary to /usr/local/bin
 
 2. Build From Source
