@@ -50,9 +50,11 @@ func createButtonReplay(ctx context.Context, persist Persistence, menu *tele.Rep
 func Start(ctx context.Context, db *sql.DB, telebotToken string) {
 
 	log := common.InitLog()
-	log.Info().Str("version", "v2.0.0").Msg("Starting Teleterm")
+	log.Info().Str("version", "v2.2.0").Msg("Starting Teleterm")
 
-	commandExecutor := new(executor.CommandOutputWriter)
+  commandExecutor := executor.CommandOutputWriter{
+    TimeoutSecond: viper.GetInt("execution_timeout_second"),
+  }
 	persist := Persistence{db: db}
 
 	pref := tele.Settings{
@@ -67,12 +69,14 @@ func Start(ctx context.Context, db *sql.DB, telebotToken string) {
 	}
 
 	configWhitelist := viper.GetIntSlice("whitelist")
-	var whitelist []int64
-	for _, id := range configWhitelist {
-		whitelist = append(whitelist, int64(id))
-	}
-	b.Use(middleware.Whitelist(whitelist...))
-
+  log.Info().Str("state", "white listing").Msg(fmt.Sprintf("total: %v", len(configWhitelist)))
+  if len(configWhitelist) > 0 {
+	  var whitelist []int64
+	  for _, id := range configWhitelist {
+		  whitelist = append(whitelist, int64(id))
+	  }
+	  b.Use(middleware.Whitelist(whitelist...))
+  }
 	menu := &tele.ReplyMarkup{ResizeKeyboard: true}
 
 	b.Handle("/refresh", func(c tele.Context) error {
