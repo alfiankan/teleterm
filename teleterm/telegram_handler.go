@@ -50,9 +50,11 @@ func createButtonReplay(ctx context.Context, persist Persistence, menu *tele.Rep
 func Start(ctx context.Context, db *sql.DB, telebotToken string) {
 
 	log := common.InitLog()
-	log.Info().Str("version", "v2.0.0").Msg("Starting Teleterm")
+	log.Info().Str("version", "v2.2.0").Msg("Starting Teleterm")
 
-	commandExecutor := new(executor.CommandOutputWriter)
+  commandExecutor := executor.CommandOutputWriter{
+    TimeoutSecond: viper.GetInt("execution_timeout_second"),
+  }
 	persist := Persistence{db: db}
 
 	pref := tele.Settings{

@@ -4,3 +4,4 @@ teleterm:
 whitelist:
   - <USER_ID>
   - <USER_ID>
+execution_timeout_second: 10
