@@ -67,12 +67,14 @@ func Start(ctx context.Context, db *sql.DB, telebotToken string) {
 	}
 
 	configWhitelist := viper.GetIntSlice("whitelist")
-	var whitelist []int64
-	for _, id := range configWhitelist {
-		whitelist = append(whitelist, int64(id))
-	}
-	b.Use(middleware.Whitelist(whitelist...))
-
+  log.Info().Str("state", "white listing").Msg(fmt.Sprintf("total: %v", len(configWhitelist)))
+  if len(configWhitelist) > 0 {
+	  var whitelist []int64
+	  for _, id := range configWhitelist {
+		  whitelist = append(whitelist, int64(id))
+	  }
+	  b.Use(middleware.Whitelist(whitelist...))
+  }
 	menu := &tele.ReplyMarkup{ResizeKeyboard: true}
 
 	b.Handle("/refresh", func(c tele.Context) error {
