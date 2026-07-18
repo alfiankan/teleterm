@@ -1,6 +1,9 @@
 # Teleterm
 Telegram Bot Exec Terminal Command 
 
+## resurrection
+in this agentic era wi will create simple telegram ai agent wrapper
+
 [![codecov](https://codecov.io/gh/alfiankan/teleterm/branch/main/graph/badge.svg?token=ZQ4Z1ZU4EM)](https://codecov.io/gh/alfiankan/teleterm)
 [![Mentioned in Awesome Go](https://awesome.re/mentioned-badge.svg)](https://github.com/avelino/awesome-go)  
 [![Go Reference](https://pkg.go.dev/badge/github.com/alfiankan/teleterm/v2.svg)](https://pkg.go.dev/github.com/alfiankan/teleterm/v2)
